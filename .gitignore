@@ -1,0 +1,47 @@
+# Gradle
+build/
+.gradle/
+gradle-app.setting
+.gradletasknamecache
+out/
+
+# NeoForge / MC dev
+run/
+runs/
+logs/
+*.log
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.code-workspace
+.project
+.classpath
+.settings/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Research — extracted reference code, not our work
+research/moderner-beta/
+
+# Local-only state
+.env
+.env.*
+.local/
+.remember/
+
+# Java
+*.class
+hs_err_*.log
+replay_*.log
+
+# Editor backups
+*~
+*.swp
+*.swo

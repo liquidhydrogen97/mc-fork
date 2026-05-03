@@ -1,0 +1,5 @@
+{
+  "_comment": "Latitude-driven temperature bias. PLACEHOLDER: returns 0 until z_clamped_gradient custom DF type is registered. See STATUS.md.",
+  "type": "minecraft:constant",
+  "argument": 0.0
+}

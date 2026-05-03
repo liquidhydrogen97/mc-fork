@@ -1,0 +1,20 @@
+{
+  "_comment": "Override of vanilla minecraft:overworld/temperature. Composition: vanilla shift_a noise + our latitude_bias. Once latitude_bias contains a real z_clamped_gradient, this produces the latitude climate gradient.",
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:flat_cache",
+    "argument": {
+      "type": "minecraft:cache_2d",
+      "argument": {
+        "type": "minecraft:shifted_noise",
+        "noise": "minecraft:temperature",
+        "xz_scale": 0.25,
+        "y_scale": 0,
+        "shift_x": "minecraft:shift_x",
+        "shift_y": 0,
+        "shift_z": "minecraft:shift_z"
+      }
+    }
+  },
+  "argument2": "mc_fork:latitude_bias"
+}
