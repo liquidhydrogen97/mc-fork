@@ -120,4 +120,40 @@ class ZClampedGradientTest {
                         ctor::newInstance);
         org.junit.jupiter.api.Assertions.assertTrue(ex.getCause() instanceof AssertionError);
     }
+
+    /**
+     * Regression: the codec must accept Z anchors as large as Phase 1 needs ({@code +/-300_000})
+     * and reject anchors outside the world border ({@code +/-30_000_000}). The original
+     * implementation copied the bound from vanilla {@code YClampedGradient}
+     * ({@code DimensionType.MIN_Y * 2 .. MAX_Y * 2}, i.e. roughly +/-4064), which was
+     * structurally wrong for a Z-axis variant: Z is bounded by the world border, not by
+     * build height, so {@code latitude_bias.json} failed to parse with
+     * {@code "Value -300000 outside of range [-4064:4062]"}.
+     *
+     * <p>The actual JSON parse is exercised at the integration tier (runClient + datapack
+     * load -- AC#5). Here we pin the bound constants on {@link ClampedGradientMath}, which
+     * is the source of truth the codec reads from -- so a future change that drifts the
+     * bound back into build-height territory fails this test, not just the playtest.
+     */
+    @Test
+    void codecAnchorBoundsCoverPhase1Range() {
+        assertAll(
+                "Codec bound must permit Phase 1 latitude_bias anchors and reject coords beyond the world border",
+                () -> assertEquals(-30_000_000, ClampedGradientMath.Z_ANCHOR_MIN,
+                        "Z_ANCHOR_MIN should match WorldBorder.MAX_CENTER_COORDINATE"),
+                () -> assertEquals(30_000_000, ClampedGradientMath.Z_ANCHOR_MAX,
+                        "Z_ANCHOR_MAX should match WorldBorder.MAX_CENTER_COORDINATE"),
+                () -> org.junit.jupiter.api.Assertions.assertTrue(
+                        300_000 >= ClampedGradientMath.Z_ANCHOR_MIN
+                                && 300_000 <= ClampedGradientMath.Z_ANCHOR_MAX,
+                        "Phase 1 latitude_bias.json uses 300_000 as a from_z/to_z; codec must accept it"),
+                () -> org.junit.jupiter.api.Assertions.assertTrue(
+                        -300_000 >= ClampedGradientMath.Z_ANCHOR_MIN
+                                && -300_000 <= ClampedGradientMath.Z_ANCHOR_MAX,
+                        "Phase 1 latitude_bias.json uses -300_000 as a from_z/to_z; codec must accept it"),
+                () -> org.junit.jupiter.api.Assertions.assertTrue(
+                        31_000_000 > ClampedGradientMath.Z_ANCHOR_MAX,
+                        "Anchors beyond the world border (31_000_000) must be outside the codec bound")
+        );
+    }
 }

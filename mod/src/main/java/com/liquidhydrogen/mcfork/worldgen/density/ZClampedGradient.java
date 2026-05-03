@@ -3,7 +3,6 @@ package com.liquidhydrogen.mcfork.worldgen.density;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.util.KeyDispatchDataCodec;
-import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 /**
@@ -16,7 +15,8 @@ import net.minecraft.world.level.levelgen.DensityFunction;
  *
  * <p>Mirrors {@code DensityFunctions.YClampedGradient} -- same field types, same
  * {@code Mth.clampedMap} math (delegated to {@link ClampedGradientMath}), same codec
- * shape -- but reads {@link DensityFunction.FunctionContext#blockZ()}.
+ * shape -- but reads {@link DensityFunction.FunctionContext#blockZ()} and bounds the
+ * Z anchors by the world border, not by build height.
  *
  * @param fromZ     World Z anchor where output equals {@code fromValue}.
  * @param toZ       World Z anchor where output equals {@code toValue}.
@@ -34,20 +34,20 @@ public record ZClampedGradient(int fromZ, int toZ, double fromValue, double toVa
     private static final double VALUE_MAX = 1_000_000.0;
 
     /**
-     * Lazy codec holder. Mirrors the standard initialization-on-demand idiom: the codec is
-     * built on first access, not at {@code ZClampedGradient.<clinit>}. This matters because
-     * the codec references {@link DimensionType#MIN_Y} / {@link DimensionType#MAX_Y}, whose
-     * loading cascades through {@code BuiltInRegistries} and therefore requires that
-     * {@code Bootstrap.bootStrap()} has already run. In production FML triggers bootstrap
-     * before the registration phase touches this class; in JVM unit tests we want to exercise
-     * the math path without booting Minecraft, so deferring codec construction keeps the test
-     * classpath honest.
+     * Lazy codec holder. Initialization-on-demand: the codec is built on first access,
+     * not at {@code ZClampedGradient.<clinit>}. The Codec instances themselves are pure
+     * DataFixerUpper and do not require a Minecraft bootstrap, but deferring construction
+     * still keeps {@code <clinit>} cheap and predictable for any test that touches the
+     * record without exercising the codec path.
+     *
+     * <p>Z-axis anchor bounds live on {@link ClampedGradientMath} so unit tests can pin
+     * them without triggering this class's static initializer chain.
      */
     private static final class CodecHolder {
         static final MapCodec<ZClampedGradient> DATA_CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-                com.mojang.serialization.Codec.intRange(DimensionType.MIN_Y * 2, DimensionType.MAX_Y * 2)
+                com.mojang.serialization.Codec.intRange(ClampedGradientMath.Z_ANCHOR_MIN, ClampedGradientMath.Z_ANCHOR_MAX)
                         .fieldOf("from_z").forGetter(ZClampedGradient::fromZ),
-                com.mojang.serialization.Codec.intRange(DimensionType.MIN_Y * 2, DimensionType.MAX_Y * 2)
+                com.mojang.serialization.Codec.intRange(ClampedGradientMath.Z_ANCHOR_MIN, ClampedGradientMath.Z_ANCHOR_MAX)
                         .fieldOf("to_z").forGetter(ZClampedGradient::toZ),
                 com.mojang.serialization.Codec.doubleRange(VALUE_MIN, VALUE_MAX)
                         .fieldOf("from_value").forGetter(ZClampedGradient::fromValue),

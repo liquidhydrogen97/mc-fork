@@ -119,3 +119,9 @@ edges[1]{ts,source,target,relation,agent,worktree,context}:
 # Worktree write event
 events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
   2026-05-03T22:02:55Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
+# Evidence link: D1.2 -> D1.1
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T22:15:16Z,D1.2,D1.1,cites,hook,main,**Dependency:** D1.1 (NeoForge mod skeleton) MUST be accepted before this contract can be assigned. The teammate working
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T22:15:16Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
