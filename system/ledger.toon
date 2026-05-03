@@ -1,0 +1,10 @@
+# looptech-hitch epistemic ledger
+# Generated: 2026-05-03
+# Modes: development
+# Constitution version: 1
+
+nodes[0]{id,type,mode,status,created_by,created_at,worktree,title,multiplicity,branch_id}:
+
+edges[0]{ts,source,target,relation,agent,worktree,context}:
+
+events[0]{ts,source,event,agent,worktree,data}:

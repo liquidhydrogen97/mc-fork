@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "modes": ["development"],
+  "hooks": {
+    "PostToolUse": [
+      {
+        "script": "dispatch-posttooluse.sh",
+        "modes": ["development"],
+        "description": "Route file changes to appropriate detectors"
+      },
+      {
+        "script": "detect-contract-mutation.sh",
+        "modes": ["development"],
+        "description": "Detect contract file changes and update ledger"
+      },
+      {
+        "script": "detect-evidence-link.sh",
+        "modes": ["development"],
+        "description": "Detect cross-reference creations between contracts"
+      },
+      {
+        "script": "detect-worktree-event.sh",
+        "modes": ["development"],
+        "description": "Detect worktree-scoped writes"
+      },
+      {
+        "script": "detect-test-delta.sh",
+        "modes": ["development"],
+        "description": "Detect test file changes and re-run affected tests"
+      }
+    ],
+    "TaskCreated": [
+      {
+        "script": "validate-contract.sh",
+        "modes": ["development"],
+        "description": "Verify contract has required sections for development mode"
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "script": "run-tests.sh",
+        "modes": ["development"],
+        "description": "CI gate -- blocks review until tests pass and build succeeds"
+      },
+      {
+        "script": "depth-check.sh",
+        "modes": ["development"],
+        "description": "Intellectual quality gate -- runs after CI, before review pipeline"
+      },
+      {
+        "script": "trigger-review.sh",
+        "modes": ["development"],
+        "description": "Dispatch development review pipeline (qa, architecture, test, code, security)"
+      }
+    ],
+    "AgentDismissed": [
+      {
+        "script": "archive-agent.sh",
+        "modes": ["development"],
+        "description": "Index and store dismissed teammate execution records"
+      }
+    ],
+    "Periodic": [
+      {
+        "script": "amendment-monitor.sh",
+        "modes": ["development"],
+        "description": "Analyze ledger patterns; propose constitutional amendments when gaps detected"
+      }
+    ],
+    "Stop": [
+      {
+        "script": "analyze-session.sh",
+        "modes": ["development"],
+        "description": "Operator modeling -- session transcript analysis for inference updates"
+      }
+    ],
+    "SessionStart": [
+      {
+        "script": "inject-profile.sh",
+        "modes": ["development"],
+        "description": "Operator modeling -- inject Layer 1 + Layer 2 profile into agent context"
+      }
+    ],
+    "PostCompact": [
+      {
+        "script": "reinject-profile.sh",
+        "modes": ["development"],
+        "description": "Operator modeling -- re-inject profile after context compaction"
+      }
+    ]
+  }
+}

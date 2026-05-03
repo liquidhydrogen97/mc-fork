@@ -265,14 +265,20 @@ Mojang changed Java Edition's numbering scheme in late 2025. The 1.21 line conti
 5. Biome resolution mapping — Beta's 11 biomes via 1×1 temp/humidity grid → modern multi-noise.
 6. Decoration porting — Beta features need to fire only inside pockets.
 
-**Effort estimates:**
-- Naive prototype (hard chunk seams, no caves, no decorations): **2-3 weeks** for someone fluent in modern MC worldgen internals
-- Decent v1 (smooth blending, Beta caves + decorations, biome mapping): **2-3 months**
-- Polished flagship feature: **4-6 months**
+**Effort estimates (revised after architecture analysis — see `research/beta-extraction.md`):**
+- Naive prototype (hard chunk seams, no caves, no decorations): **~2 weeks**
+- Decent v1 (smooth blending, biome mapping; Beta caves deferred to v2): **~5-6 weeks**
+- Polished flagship feature: **~3-4 months**
 
-**Starting point:** fork **[Moderner Beta](https://modrinth.com/mod/moderner-beta)** (Nostalgica-Reverie fork, MIT-licensed, dual-loader, supports 1.21.1+). It already has Beta noise stack working as a registered modern `ChunkGenerator`. Lift = converting its `ChunkGenerator` subclass into a routable component callable per-chunk from a custom `ChunkGenerator`. Puts the project ~60-70% to naive prototype on day one.
+**Starting point:** fork **Moderner Beta** ([Codeberg](https://codeberg.org/Nostalgica-Reverie/moderner-beta) — note: Modrinth's GitHub link is a mirror; active dev is on Codeberg). MIT-licensed, dual-loader, supports 1.21.1+. Three architecture findings reduced effort estimates significantly:
 
-**Decision:** keep this in the roadmap as Phase 7+ stretch goal. Highest-risk, highest-effort piece — benefits enormously from the rest of the system being stable first.
+1. **The ChunkProvider abstraction is already structurally routable.** `provideChunk(blender, sm, chunk, noiseConfig)` is per-chunk; `skipChunk(chunkX, chunkZ, step)` exists with a step enum. We don't need to retrofit per-chunk routing — only build the routing layer that decides which provider to call.
+2. **Vertical extent already solved.** Moderner Beta has `OVERWORLD_FULL` (Y -64..320) alongside the default `OVERWORLD_128`. No need to crush or stretch Beta noise.
+3. **Recommended approach: hybrid extract + cleanroom.** Lift Tier 1 (~1,500 LoC pure noise math) verbatim with MIT attribution. Lift Tier 2 (~800-900 LoC of the Beta noise formula). Write the routing layer cleanroom. Skip Beta biomes (use modern biomes inside pockets — only terrain shape changes). Defer Beta cave carver to v2.
+
+**The actually-hard part:** edge blending tuning — density lerp in transition band. ~3-4 weeks of iteration. The other "hard parts" mostly dissolve under analysis.
+
+**Decision:** keep as Phase 7+ stretch goal. The rest of the system stable first.
 
 ---
 
