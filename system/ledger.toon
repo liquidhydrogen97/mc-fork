@@ -23,3 +23,99 @@ edges[1]{ts,source,target,relation,agent,worktree,context}:
 # Worktree write event
 events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
   2026-05-03T20:32:08Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T20:56:12Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:22:45Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:22:55Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:23:47Z,D1.1,status_change,hook,main,draft,in_progress
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:23:47Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:24:09Z,D1.1,status_change,hook,main,draft,completed
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:24:09Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:27:48Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Evidence link: D1.1 -> D1.2
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:29:23Z,D1.1,D1.2,cites,hook,main,- **Recommendation:** Neither medium finding blocks D1.1 acceptance. Before D1.2 lands code; resolve the parchment pin (
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:29:23Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Evidence link: D1.1 -> D1.2
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:34:34Z,D1.1,D1.2,blocked_by,hook,main,- **Recommendation:** Neither medium finding blocks D1.1 acceptance. Before D1.2 lands code; resolve the parchment pin (
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:34:34Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Evidence link: D1.1 -> D1.2
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:35:05Z,D1.1,D1.2,blocked_by,hook,main,- **Recommendation:** Neither medium finding blocks D1.1 acceptance. Before D1.2 lands code; resolve the parchment pin (
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:35:05Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:35:35Z,D1.1,status_change,hook,main,completed,accepted
+# Evidence link: D1.1 -> D1.2
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:35:35Z,D1.1,D1.2,blocked_by,hook,main,- **Recommendation:** Neither medium finding blocks D1.1 acceptance. Before D1.2 lands code; resolve the parchment pin (
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:35:35Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:35:48Z,D1.1,status_change,hook,main,completed,accepted
+# Evidence link: D1.1 -> D1.2
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:35:48Z,D1.1,D1.2,blocked_by,hook,main,- **Recommendation:** Neither medium finding blocks D1.1 acceptance. Before D1.2 lands code; resolve the parchment pin (
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:35:48Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:58:40Z,D1.2,status_change,hook,main,draft,in_progress
+# Evidence link: D1.2 -> D1.1
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:58:40Z,D1.2,D1.1,cites,hook,main,**Dependency:** D1.1 (NeoForge mod skeleton) MUST be accepted before this contract can be assigned. The teammate working
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:58:40Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:58:54Z,D1.2,status_change,hook,main,draft,in_progress
+# Evidence link: D1.2 -> D1.1
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:58:54Z,D1.2,D1.1,cites,hook,main,**Dependency:** D1.1 (NeoForge mod skeleton) MUST be accepted before this contract can be assigned. The teammate working
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:58:54Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T21:59:20Z,D1.2,status_change,hook,main,draft,in_progress
+# Evidence link: D1.2 -> D1.1
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T21:59:20Z,D1.2,D1.1,cites,hook,main,**Dependency:** D1.1 (NeoForge mod skeleton) MUST be accepted before this contract can be assigned. The teammate working
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T21:59:20Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
+# Contract status changed
+events[1]{ts,source,event,agent,worktree,old_status,new_status}:
+  2026-05-03T22:02:55Z,D1.2,status_change,hook,main,draft,in_progress
+# Evidence link: D1.2 -> D1.1
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T22:02:55Z,D1.2,D1.1,cites,hook,main,**Dependency:** D1.1 (NeoForge mod skeleton) MUST be accepted before this contract can be assigned. The teammate working
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T22:02:55Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork

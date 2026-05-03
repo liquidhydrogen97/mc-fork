@@ -1,5 +1,6 @@
 package com.liquidhydrogen.mcfork;
 
+import com.liquidhydrogen.mcfork.worldgen.density.ModDensityFunctions;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -7,10 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Entry point for the mc-fork NeoForge mod. The body is intentionally minimal: this
- * skeleton contract delivers build infrastructure only. Subsequent contracts hang
- * registrations (density functions, features, biome modifiers) off the mod event bus
- * passed into the constructor.
+ * Entry point for the mc-fork NeoForge mod. Hangs registrations (density-function types,
+ * features, biome modifiers) off the mod event bus passed into the constructor.
  */
 @Mod(McForkMod.MOD_ID)
 public class McForkMod {
@@ -21,5 +20,8 @@ public class McForkMod {
 
     public McForkMod(IEventBus modEventBus, ModContainer modContainer) {
         LOGGER.info("[{}] mod constructor invoked; mc-fork skeleton loaded", MOD_ID);
+        if (modEventBus != null) {
+            ModDensityFunctions.register(modEventBus);
+        }
     }
 }

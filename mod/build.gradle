@@ -35,8 +35,8 @@ neoForge {
     }
 
     parchment {
-        minecraftVersion = '1.21.1'
-        mappingsVersion = '2024.11.17'
+        minecraftVersion = parchment_mc_version
+        mappingsVersion = parchment_mappings_version
     }
 
     runs {
@@ -76,6 +76,12 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 configurations {
+    // Placeholder for declaring optional local-only JARs (e.g., a probe mod loaded for
+    // dev runs but not published as a runtime dependency). Add them via
+    //   localRuntime files('libs/foo.jar')
+    // and they will join runtimeClasspath without leaking into the published POM.
+    // Currently empty; kept so MDG/IDE wiring is consistent with the upstream MDK.
+    localRuntime
     runtimeClasspath.extendsFrom localRuntime
 }
 
@@ -84,13 +90,22 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-    // McForkMod's main classpath comes from NeoForge runtime, which MDG does not
-    // propagate to the test classpath. Declare the few types tests need (SLF4J for
-    // the logger field; bus + fml-loader for the constructor's parameter types) at
-    // the versions NeoForge 21.1.176 ships so test bytecode matches runtime.
+    // SLF4J reaches main via the NeoForge runtime; pin the version explicitly for tests
+    // so the bytecode the test classes see matches what runs in production.
     testImplementation 'org.slf4j:slf4j-api:2.0.9'
-    testCompileOnly 'net.neoforged:bus:8.0.2'
-    testCompileOnly 'net.neoforged.fancymodloader:loader:4.0.39'
+}
+
+// MDG keeps the NeoForge / vanilla classpath off the test classpath by default. Mirror
+// main's compile classpath into tests so unit tests can reference Mojang types like
+// ResourceLocation, DensityFunction, Mth, etc., without adding individual artifact pins
+// that would drift from the NeoForge runtime version. Tests do NOT start Minecraft --
+// they exercise pure math/codec surfaces -- so propagating the compile classpath alone
+// is sufficient; production runtime classpath remains untouched.
+sourceSets {
+    test {
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.compileClasspath
+    }
 }
 
 test {
