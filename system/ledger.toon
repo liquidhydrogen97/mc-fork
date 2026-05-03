@@ -8,3 +8,18 @@ nodes[0]{id,type,mode,status,created_by,created_at,worktree,title,multiplicity,b
 edges[0]{ts,source,target,relation,agent,worktree,context}:
 
 events[0]{ts,source,event,agent,worktree,data}:
+# Contract created
+nodes[1]{id,type,mode,status,created_by,created_at,worktree,title}:
+  D1.1,contract,development,draft,hook,2026-05-03T20:30:38Z,main,Contract: D1.1 -- NeoForge mod skeleton
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T20:30:38Z,D1.1,worktree_write,hook,main,contracts/D1.1.md,/home/ebeckner/dev/mc-fork
+# Contract created
+nodes[1]{id,type,mode,status,created_by,created_at,worktree,title}:
+  D1.2,contract,development,draft,hook,2026-05-03T20:32:08Z,main,Contract: D1.2 -- z_clamped_gradient density function
+# Evidence link: D1.2 -> D1.1
+edges[1]{ts,source,target,relation,agent,worktree,context}:
+  2026-05-03T20:32:08Z,D1.2,D1.1,cites,hook,main,**Dependency:** D1.1 (NeoForge mod skeleton) MUST be accepted before this contract can be assigned. The teammate working
+# Worktree write event
+events[1]{ts,source,event,agent,worktree,file_path,worktree_root}:
+  2026-05-03T20:32:08Z,D1.2,worktree_write,hook,main,contracts/D1.2.md,/home/ebeckner/dev/mc-fork
