@@ -4,6 +4,14 @@
 
 **Phase 1 — Latitude temperature system.** Per `worldgen-plan.md` §Phase 1.
 
+D1.1 (NeoForge mod skeleton) accepted 2026-05-03 — all 5 reviewers passed. D1.2 (z_clamped_gradient density function) ready to start.
+
+## Tech debt logged
+
+- **Plugin: ModDevGradle `disableRecompilation = true`** — adopted in D1.1 because the host's 7.5GiB RAM cannot run NeoGradle's standard Vineflower decompile pipeline (kernel OOM at ~5.4GB RSS). Tradeoff: no Mojang sources jar in IDE; on-demand single-class decompile via IntelliJ is the documented fallback. **Trigger to revisit:** when CI runs on a runner with ≥16GiB RAM, or when we provision a beefier dev box. Re-evaluate flipping `disableRecompilation` back to default at that point. (See `mod/build.gradle:31-34`, contracts/D1.1.md Revision History 2026-05-03.)
+- **`mod/build.gradle:37-40`** — Parchment `minecraftVersion` and `mappingsVersion` are hardcoded inside the build file rather than `gradle.properties` like all other version pins. Extract to `parchment_mc_version` / `parchment_mappings_version` properties. One-line fix; fold into D1.2 housekeeping. (Code reviewer finding, D1.1 review.)
+- **`mod/build.gradle:78-80`** — `runtimeClasspath.extendsFrom localRuntime` is cargo-culted MDG boilerplate; `localRuntime` is never defined, silent no-op, latent confusion vector. Either remove or add a comment explaining intent. Fold into D1.2 housekeeping.
+
 ## What's in place
 
 - `strip-list.md` — design inventory (cuts, keeps, reworks, decisions)
@@ -12,6 +20,11 @@
   - `pack.mcmeta` — pack format 48 (1.21.1)
   - `data/mc_fork/worldgen/density_function/latitude_bias.json` — placeholder, returns 0
   - `data/minecraft/worldgen/density_function/overworld/temperature.json` — override of vanilla, composes vanilla noise + latitude_bias
+- `mod/` — NeoForge 1.21.1 mod skeleton (D1.1 accepted)
+  - `McForkMod.java` entry point, `SmokeTest.java`, ModDevGradle 2.0.141 build, JaCoCo + JUnit 5 wiring
+  - All run configs (`runClient`, `runServer`, `runData`) verified to load mod under FML
+- `contracts/D1.1.md` — accepted (5/5 reviewers pass)
+- `contracts/D1.2.md` — z_clamped_gradient, draft, ready to assign
 - `research/` — beta-extractor agent working here (parallel)
 
 ## Phase 1 finding: pure datapack is not sufficient
